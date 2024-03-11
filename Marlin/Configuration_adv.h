@@ -956,7 +956,7 @@
 
   // Safety: The probe needs time to recognize the command.
   //         Minimum command delay (ms). Enable and increase if needed.
-  //#define BLTOUCH_DELAY 500
+  #define BLTOUCH_DELAY 300
 
   /**
    * Settings for BLTOUCH Classic 1.2, 1.3 or BLTouch Smart 1.0, 2.0, 2.2, 3.0, 3.1, and most clones:
@@ -1003,7 +1003,7 @@
    *
    * Set the default state here, change with 'M401 S' or UI, use M500 to save, M502 to reset.
    */
-  //#define BLTOUCH_HS_MODE true
+  #define BLTOUCH_HS_MODE true
 
   #ifdef BLTOUCH_HS_MODE
     // The probe Z offset (M851 Z) is the height at which the probe triggers.
@@ -1117,7 +1117,7 @@
  * Fixed-time-based Motion Control -- EXPERIMENTAL
  * Enable/disable and set parameters with G-code M493.
  */
-//#define FT_MOTION
+#define FT_MOTION
 #if ENABLED(FT_MOTION)
   #define FTM_DEFAULT_MODE        ftMotionMode_DISABLED // Default mode of fixed time control. (Enums in ft_types.h)
   #define FTM_DEFAULT_DYNFREQ_MODE dynFreqMode_DISABLED // Default mode of dynamic frequency calculation. (Enums in ft_types.h)
@@ -1200,8 +1200,8 @@
  *  X<1>         Set the given parameters only for the X axis.
  *  Y<1>         Set the given parameters only for the Y axis.
  */
-//#define INPUT_SHAPING_X
-//#define INPUT_SHAPING_Y
+#define INPUT_SHAPING_X
+#define INPUT_SHAPING_Y
 #if ANY(INPUT_SHAPING_X, INPUT_SHAPING_Y)
   #if ENABLED(INPUT_SHAPING_X)
     #define SHAPING_FREQ_X  40          // (Hz) The default dominant resonant frequency on the X axis.
@@ -1213,7 +1213,7 @@
   #endif
   //#define SHAPING_MIN_FREQ  20        // By default the minimum of the shaping frequencies. Override to affect SRAM usage.
   //#define SHAPING_MAX_STEPRATE 10000  // By default the maximum total step rate of the shaped axes. Override to affect SRAM usage.
-  //#define SHAPING_MENU                // Add a menu to the LCD to set shaping parameters.
+  #define SHAPING_MENU                // Add a menu to the LCD to set shaping parameters.
 #endif
 
 // @section motion
@@ -1240,10 +1240,10 @@
  * Enable DISABLE_IDLE_* to shut down axis steppers after an idle period.
  * The default timeout duration can be overridden with M18 and M84. Set to 0 for No Timeout.
  */
-#define DEFAULT_STEPPER_TIMEOUT_SEC 120
+#define DEFAULT_STEPPER_TIMEOUT_SEC 0
 #define DISABLE_IDLE_X
 #define DISABLE_IDLE_Y
-#define DISABLE_IDLE_Z    // Disable if the nozzle could fall onto your printed part!
+//#define DISABLE_IDLE_Z    // Disable if the nozzle could fall onto your printed part!
 //#define DISABLE_IDLE_I
 //#define DISABLE_IDLE_J
 //#define DISABLE_IDLE_K
@@ -2333,7 +2333,7 @@
  * Nonlinear Extrusion Control
  *
  * Control extrusion rate based on instantaneous extruder velocity. Can be used to correct for
- * underextrusion at high extruder speeds that are otherwise well-behaved (i.e., not skipping).
+iv * underextrusion at high extruder speeds that are otherwise well-behaved (i.e., not skipping).
  */
 //#define NONLINEAR_EXTRUSION
 
@@ -2386,8 +2386,8 @@
 #if PROBE_SELECTED && !IS_KINEMATIC
   //#define PROBING_MARGIN_LEFT PROBING_MARGIN
   //#define PROBING_MARGIN_RIGHT PROBING_MARGIN
-  //#define PROBING_MARGIN_FRONT PROBING_MARGIN
-  //#define PROBING_MARGIN_BACK PROBING_MARGIN
+  #define PROBING_MARGIN_FRONT PROBING_MARGIN
+  #define PROBING_MARGIN_BACK PROBING_MARGIN
 #endif
 
 #if ANY(MESH_BED_LEVELING, AUTO_BED_LEVELING_UBL)
@@ -3363,11 +3363,11 @@
    */
   //#define HYBRID_THRESHOLD
 
-  #define X_HYBRID_THRESHOLD     100  // [mm/s]
+  #define X_HYBRID_THRESHOLD     1000  // [mm/s] 100
   #define X2_HYBRID_THRESHOLD    100
-  #define Y_HYBRID_THRESHOLD     100
+  #define Y_HYBRID_THRESHOLD     1000 // 100
   #define Y2_HYBRID_THRESHOLD    100
-  #define Z_HYBRID_THRESHOLD       3
+  #define Z_HYBRID_THRESHOLD       3000 // 3
   #define Z2_HYBRID_THRESHOLD      3
   #define Z3_HYBRID_THRESHOLD      3
   #define Z4_HYBRID_THRESHOLD      3
@@ -3377,7 +3377,7 @@
   #define U_HYBRID_THRESHOLD       3  // [mm/s]
   #define V_HYBRID_THRESHOLD       3
   #define W_HYBRID_THRESHOLD       3
-  #define E0_HYBRID_THRESHOLD     30
+  #define E0_HYBRID_THRESHOLD     3000 // 30
   #define E1_HYBRID_THRESHOLD     30
   #define E2_HYBRID_THRESHOLD     30
   #define E3_HYBRID_THRESHOLD     30

@@ -118,7 +118,7 @@
 //#define BLUETOOTH
 
 // Name displayed in the LCD "Ready" message and Info menu
-#define CUSTOM_MACHINE_NAME "Ender 5 Plus CoreXY"
+#define CUSTOM_MACHINE_NAME "Ender 5 Plus CoreXY rev2"
 
 // Printer's unique ID, used by some programs to differentiate between machines.
 // Choose your own or use a service like https://www.uuidgenerator.net/version4
@@ -891,7 +891,6 @@
 #define COREXY
 //#define COREXZ
 //#define COREYZ
-// HWE my fault
 // #define COREYX
 //#define COREZX
 //#define COREZY
@@ -1237,7 +1236,7 @@
  * Override with M92 (when enabled below)
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 800, 932 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 642, 932 }
 
 /**
  * Enable support for M92. Disable to save at least ~530 bytes of flash.
@@ -1249,7 +1248,7 @@
  * Override with M203
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_FEEDRATE          { 300, 300, 5, 25 }
+#define DEFAULT_MAX_FEEDRATE          { 500, 500, 10, 25 }
 
 //#define LIMITED_MAX_FR_EDITING        // Limit edit via M203 or LCD to DEFAULT_MAX_FEEDRATE * 2
 #if ENABLED(LIMITED_MAX_FR_EDITING)
@@ -1262,7 +1261,7 @@
  * Override with M201
  *                                      X, Y, Z [, I [, J [, K...]]], E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 100, 10000 }
+#define DEFAULT_MAX_ACCELERATION      { 3000, 3000, 1000, 10000 }
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -1277,9 +1276,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          3000    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_ACCELERATION          1000    // X, Y, Z and E acceleration for printing moves
 #define DEFAULT_RETRACT_ACCELERATION  3000    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   3000    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_TRAVEL_ACCELERATION   1000    // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk limits (mm/s)
@@ -1289,7 +1288,7 @@
  * When changing speed and direction, if the difference is less than the
  * value set here, it may happen instantaneously.
  */
-#define CLASSIC_JERK
+//#define CLASSIC_JERK
 #if ENABLED(CLASSIC_JERK)
   #define DEFAULT_XJERK 10.0
   #define DEFAULT_YJERK 10.0
@@ -1331,7 +1330,7 @@
  *
  * See https://github.com/synthetos/TinyG/wiki/Jerk-Controlled-Motion-Explained
  */
-//#define S_CURVE_ACCELERATION
+#define S_CURVE_ACCELERATION
 
 //===========================================================================
 //============================= Z Probe Options =============================
@@ -1582,7 +1581,7 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET { 10, 10, 0 }
+#define NOZZLE_TO_PROBE_OFFSET { 0, -10, -1.85 }
 
 // Enable and set to use a specific tool for probing. Disable to allow any tool.
 #define PROBING_TOOL 0
@@ -1592,13 +1591,13 @@
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
-#define PROBING_MARGIN 10
+#define PROBING_MARGIN 20
 
 // X and Y axis travel speed (mm/min) between probes
 #define XY_PROBE_FEEDRATE (133*60)
 
 // Feedrate (mm/min) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_FEEDRATE_FAST (4*60)
+#define Z_PROBE_FEEDRATE_FAST (20*60) //HWE 4*60
 
 // Feedrate (mm/min) for the "accurate" probe of each point
 #define Z_PROBE_FEEDRATE_SLOW (Z_PROBE_FEEDRATE_FAST / 2)
@@ -1648,7 +1647,7 @@
  * A total of 2 does fast/slow probes with a weighted average.
  * A total of 3 or more adds more slow probes, taking the average.
  */
-#define MULTIPLE_PROBING 2
+//#define MULTIPLE_PROBING 2 // HWE
 //#define EXTRA_PROBING    1
 
 /**
@@ -1750,8 +1749,8 @@
 // @section motion
 
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
-#define INVERT_X_DIR false
-#define INVERT_Y_DIR false
+#define INVERT_X_DIR true
+#define INVERT_Y_DIR true
 #define INVERT_Z_DIR false
 //#define INVERT_I_DIR false
 //#define INVERT_J_DIR false
@@ -1782,7 +1781,7 @@
  *  - Use a low value (i.e., Z_MIN_POS) if the nozzle falls down to the bed.
  *  - Use a large value (i.e., Z_MAX_POS) if the bed falls down, away from the nozzle.
  */
-//#define Z_IDLE_HEIGHT Z_MAX_POS
+#define Z_IDLE_HEIGHT Z_MIN_POS
 
 #define Z_CLEARANCE_FOR_HOMING  20   // (mm) Minimal Z height before homing (G28) for Z clearance above the bed, clamps, ...
                                       // You'll need this much clearance above Z_MAX_POS to avoid grinding.
@@ -1795,7 +1794,7 @@
 // Direction of endstops when homing; 1=MAX, -1=MIN
 // :[-1,1]
 //HWE a==x, b==y, b is left, a is right
-#define X_HOME_DIR 1
+#define X_HOME_DIR -1
 #define Y_HOME_DIR 1
 #define Z_HOME_DIR -1
 //#define I_HOME_DIR -1
@@ -1823,8 +1822,8 @@
 // @section geometry
 
 // The size of the printable area
-#define X_BED_SIZE 360
-#define Y_BED_SIZE 360
+#define X_BED_SIZE 300
+#define Y_BED_SIZE 350
 
 // Travel limits (linear=mm, rotational=°) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
@@ -1832,7 +1831,7 @@
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
-#define Z_MAX_POS 400
+#define Z_MAX_POS 310
 //#define I_MIN_POS 0
 //#define I_MAX_POS 50
 //#define J_MIN_POS 0
@@ -2282,7 +2281,7 @@
 #endif
 
 // Homing speeds (linear=mm/min, rotational=°/min)
-#define HOMING_FEEDRATE_MM_M { (50*60), (50*60), (4*60) }
+#define HOMING_FEEDRATE_MM_M { (90*60), (90*60), (15*60) }
 
 // Validate that endstops are triggered on homing moves
 #define VALIDATE_HOMING_ENDSTOPS
