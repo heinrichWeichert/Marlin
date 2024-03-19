@@ -61,7 +61,12 @@
 //
 // Z Probe must be this pin
 //
-#define Z_MIN_PROBE_PIN                     PC14  // PROBE
+#ifdef Z_STALL_SENSITIVITY
+  #define Z_MIN_PROBE_PIN                     Z_STOP_PIN
+#else
+  #define Z_MIN_PROBE_PIN                     PC14  // PROBE
+#endif
+
 
 //
 // Probe enable
